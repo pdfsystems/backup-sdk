@@ -18,7 +18,7 @@ class BackupClient extends SdkClient
 
     private static function getUserAgent(): string
     {
-        return 'PDF Backup SDK/' . static::getVersion();
+        return 'PDF Backup SDK/'.static::getVersion();
     }
 
     private static function getVersion(): string

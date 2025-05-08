@@ -6,7 +6,5 @@ use Pdfsystems\BackupSdk\BackupClient;
 
 abstract class Repository
 {
-    public function __construct(protected BackupClient $client)
-    {
-    }
+    public function __construct(protected BackupClient $client) {}
 }

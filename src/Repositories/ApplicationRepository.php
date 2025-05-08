@@ -16,9 +16,9 @@ class ApplicationRepository extends Repository
     public function list(int $perPage = 15, int $page = 1): BackupList
     {
         return $this->client->getDto('api/applications', BackupList::class, [
-                'count' => $perPage,
-                'page' => $page,
-            ]);
+            'count' => $perPage,
+            'page' => $page,
+        ]);
     }
 
     /**
