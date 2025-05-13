@@ -42,7 +42,7 @@ class BackupRepository extends Repository
             'application_id' => is_int($application) ? $application : $application->id,
             'filename' => $file->getFilename(),
             'size' => $file->getSize(),
-            'mime_type' => $file->getType(),
+            'mime_type' => mime_content_type($file->getPathname()),
             'meta' => json_encode($meta),
             'disk' => $disk,
         ]);
