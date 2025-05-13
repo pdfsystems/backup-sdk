@@ -36,10 +36,10 @@ class BackupRepository extends Repository
     /**
      * @throws GuzzleException
      */
-    public function create(Application $application, SplFileInfo $file, array $meta = [], ?string $disk = null): Backup
+    public function create(Application|int $application, SplFileInfo $file, array $meta = [], ?string $disk = null): Backup
     {
         $body = SdkClient::convertJsonToMultipart([
-            'application_id' => $application->id,
+            'application_id' => is_int($application) ? $application : $application->id,
             'filename' => $file->getFilename(),
             'size' => $file->getSize(),
             'mime_type' => $file->getType(),
