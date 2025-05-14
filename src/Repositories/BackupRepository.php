@@ -7,6 +7,7 @@ use Pdfsystems\BackupSdk\Dtos\Application;
 use Pdfsystems\BackupSdk\Dtos\Backup;
 use Pdfsystems\BackupSdk\Dtos\Pagination\BackupList;
 use Rpungello\SdkClient\SdkClient;
+use RuntimeException;
 use Spatie\DataTransferObject\Exceptions\UnknownProperties;
 use SplFileInfo;
 
@@ -33,6 +34,36 @@ class BackupRepository extends Repository
     public function find(int $id): Backup
     {
         return $this->client->getDto("api/backups/$id", Backup::class);
+    }
+
+    /**
+     * @throws GuzzleException
+     */
+    public function download(Backup|int $backup, string $localDirectory, string $filename = null): void
+    {
+        $id = is_int($backup) ? $backup : $backup->id;
+        $response = $this->client->get("api/backups/$id/download");
+
+        if (empty($filename)) {
+            $disposition = $response->getHeader('Content-Disposition')[0];
+            if (preg_match('/filename="?([^"]+)"?/', $disposition, $matches)) {
+                $filename = $matches[1];
+            } else {
+                throw new RuntimeException('Unable to determine filename');
+            }
+        }
+        $fh = fopen("$localDirectory/$filename", 'wb');
+        if ($fh === false) {
+            throw new RuntimeException("Unable to open file for writing: $localDirectory/$filename");
+        }
+
+        $result = fwrite($fh, $response->getBody());
+        if ($result === false) {
+            fclose($fh);
+            throw new RuntimeException("Unable to write to file: $localDirectory/$filename");
+        }
+
+        fclose($fh);
     }
 
     /**
