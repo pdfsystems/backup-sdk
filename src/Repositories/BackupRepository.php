@@ -16,7 +16,7 @@ class BackupRepository extends Repository
      * @throws UnknownProperties
      * @throws GuzzleException
      */
-    public function list(int $perPage = 15, int $page = 1, Application|int|null $application = null, ?string $type = null): BackupList
+    public function list(Application|int|null $application = null, ?string $type = null, int $perPage = 15, int $page = 1): BackupList
     {
         return $this->client->getDto('api/backups', BackupList::class, [
             'count' => $perPage,
