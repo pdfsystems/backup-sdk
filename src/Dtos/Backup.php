@@ -14,6 +14,7 @@ class Backup extends DataTransferObject
     public ?string $disk;
 
     public ?string $filename;
+    public ?string $type;
 
     public ?string $mime_type;
 
