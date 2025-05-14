@@ -1,20 +1,21 @@
-# SDK for interfacing with PDF's application backup provider
+# PDF Systems Backup SDK
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/pdfsystems/backup-sdk.svg?style=flat-square)](https://packagist.org/packages/pdfsystems/backup-sdk)
 [![Tests](https://img.shields.io/github/actions/workflow/status/pdfsystems/backup-sdk/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/pdfsystems/backup-sdk/actions/workflows/run-tests.yml)
-[![Total Downloads](https://img.shields.io/packagist/dt/pdfsystems/backup-sdk.svg?style=flat-square)](https://packagist.org/packages/pdfsystems/backup-sdk)
-
-This is where your description should go. Try and limit it to a paragraph or two. Consider adding a small example.
-
-## Support us
-
-[<img src="https://github-ads.s3.eu-central-1.amazonaws.com/backup-sdk.jpg?t=1" width="419px" />](https://spatie.be/github-ad-click/backup-sdk)
-
-We invest a lot of resources into creating [best in class open source packages](https://spatie.be/open-source). You can support us by [buying one of our paid products](https://spatie.be/open-source/support-us).
-
-We highly appreciate you sending us a postcard from your hometown, mentioning which of our package(s) you are using. You'll find our address on [our contact page](https://spatie.be/about-us). We publish all received postcards on [our virtual postcard wall](https://spatie.be/open-source/postcards).
 
 ## Installation
+
+You can install the package via composer, but first you need to add PDF's composer repository to your composer.json file:
+
+```json
+{
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://composer.pdfsystems.com"
+        }
+    ]
+}
+```
 
 You can install the package via composer:
 
@@ -24,9 +25,89 @@ composer require pdfsystems/backup-sdk
 
 ## Usage
 
+### Creating a Client
+
 ```php
-$skeleton = new Pdfsystems\BackupSdk();
-echo $skeleton->echoPhrase('Hello, Pdfsystems!');
+$client = new \Pdfsystems\BackupSdk\BackupClient('{Auth Token}');
+```
+
+### Applications
+
+#### List Applications
+
+```php
+$client = new \Pdfsystems\BackupSdk\BackupClient('{Auth Token}');
+$client->applications()->list();
+```
+
+#### Load Application
+
+```php
+$client = new \Pdfsystems\BackupSdk\BackupClient('{Auth Token}');
+$client->applications()->find(1);
+```
+
+#### Create Application
+
+```php
+$client = new \Pdfsystems\BackupSdk\BackupClient('{Auth Token}');
+$client->applications()->create(
+    new \Pdfsystems\BackupSdk\Dtos\Application([
+        'name' => 'My Application',
+    ])
+);
+```
+
+#### Update Application
+
+```php
+$client = new \Pdfsystems\BackupSdk\BackupClient('{Auth Token}');
+$application = $client->applications()->find(1);
+$application->name = 'My Updated Application';
+$client->applications()->update($application);
+```
+
+### Backups
+
+#### List Backups
+
+```php
+$client = new \Pdfsystems\BackupSdk\BackupClient('{Auth Token}');
+$client->backups()->list(); // All backups
+$client->backups()->list(1); // Backups for a specific application
+$client->backups()->list(1, 'database'); // Backups for a specific application + type
+```
+
+#### Load Backup
+
+```php
+$client = new \Pdfsystems\BackupSdk\BackupClient('{Auth Token}');
+$client->backups()->find(1);
+```
+
+#### Create Backup
+
+```php
+$client = new \Pdfsystems\BackupSdk\BackupClient('{Auth Token}');
+$file = new SplFileInfo('/path/to/file.ext');
+$client->backups()->create(
+    1,
+    $file,
+    [
+        'field1' =>  'value1',
+        'field2' =>  'value2',
+    ],
+    'database'
+);
+```
+
+#### Update Backup
+
+```php
+$client = new \Pdfsystems\BackupSdk\BackupClient('{Auth Token}');
+$backup = $client->backups()->find(1);
+$backup->name = 'My Updated Backup';
+$client->backups()->update($backup);
 ```
 
 ## Testing
