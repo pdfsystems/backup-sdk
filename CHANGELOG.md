@@ -2,6 +2,10 @@
 
 All notable changes to `backup-sdk` will be documented in this file.
 
+## 1.1.0 - 2025-05-14
+
+Add ability to download backups
+
 ## 1.0.2 - 2025-05-14
 
 - Change parameter order when listing backups
