@@ -39,7 +39,7 @@ class BackupRepository extends Repository
     /**
      * @throws GuzzleException
      */
-    public function download(Backup|int $backup, string $localDirectory, string $filename = null): void
+    public function download(Backup|int $backup, string $localDirectory, ?string $filename = null): void
     {
         $id = is_int($backup) ? $backup : $backup->id;
         $response = $this->client->get("api/backups/$id/download");
