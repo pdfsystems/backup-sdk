@@ -11,7 +11,7 @@ use Rpungello\SdkClient\SdkClient;
 
 class BackupClient extends SdkClient
 {
-    public function __construct(private string $authToken, string $baseUri = 'https://backup.pdfsystems.com', ?HandlerStack $handler = null)
+    public function __construct(private readonly string $authToken, string $baseUri, ?HandlerStack $handler = null)
     {
         parent::__construct($baseUri, $handler, static::getUserAgent());
     }
