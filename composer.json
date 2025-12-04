@@ -17,7 +17,7 @@
     "require": {
         "php": "^8.2",
         "ext-fileinfo": "*",
-        "rpungello/sdk-client": "^1.14"
+        "rpungello/sdk-client": "^2.0"
     },
     "require-dev": {
         "pestphp/pest": "^3.0",
