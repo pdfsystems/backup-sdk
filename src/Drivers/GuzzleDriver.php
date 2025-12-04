@@ -8,7 +8,7 @@ class GuzzleDriver extends \Rpungello\SdkClient\Drivers\GuzzleDriver
 {
     use BackupDriver;
 
-    public function __construct(private readonly string $authToken, string $baseUri, HandlerStack $handler = null)
+    public function __construct(private readonly string $authToken, string $baseUri, ?HandlerStack $handler = null)
     {
         parent::__construct($baseUri, $handler, static::getUserAgent());
     }
