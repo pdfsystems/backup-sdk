@@ -2,6 +2,10 @@
 
 All notable changes to `backup-sdk` will be documented in this file.
 
+## 2.0.0 - 2025-12-04
+
+Update to `rpungello/sdk-client` `2.x`
+
 ## 1.2.0 - 2025-09-11
 
 Remove default base URI
